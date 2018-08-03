@@ -1,0 +1,15 @@
+1. a) Find out what networking devices are installed in the department.
+   b) Describe the network type and topology.
+   c) File and printer sharing in different OS.
+   d) Network address config in different OS.
+   e) Find IP & MAC id in different OS.
+   f) User group and domain config.
+   g) Use of utilities: arp, ipconfig/ifconfig/ tracert, nslookup.
+
+2. Examine packet flow across a network segment and see the operation of various Internet protocols across the different layers in the TCP/IP stack. 
+(Hint: Use utilities netstat, snoop, tcpdump, ...)
+
+3. a) Use Unix sockets to implement a simple client and server that communicate over the network. 
+   b) Write a program to implement daytime server that responds with the day and time to the request sent by client.
+
+   
