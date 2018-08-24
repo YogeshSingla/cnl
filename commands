@@ -1,6 +1,0 @@
-# List of commands
-## Encrytion and Decryption
-```
-openssl aes-128-cbc -in <infile> -out <outfile>
-openssl aes-128-cbc -d -in <infile> -out <outfile>
-```
