@@ -41,20 +41,29 @@ if __name__ == '__main__':
     remote_port = '432'
     ack_port = '433'
     log_filename = 'data/log_sender.txt'
-    packet_filename = 'data/log_receiver.txt'
+    packet_filename = 'data/sent_packets'
 
     # Create sockets
     try:
+        # sockets for sending data
         # UDP socket for packets
         send_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         send_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         send_sock.bind(("", ack_port))
-
         # TCP socket for acks
         ack_sock = socket.socket()
         ack_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         ack_sock.bind(("", ack_port))
         ack_sock.listen(1)
+
+        # sockets for recieving data
+        recv_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)    # AF_INET is the Address Family, INET means IPv4
+        recv_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) # Socket level option is set to allow reuse of local addresses
+        recv_sock.bind(("", listen_port))
+        # TCP socket for sending ACKs for the data received
+        ack_sock = socket.socket()
+        ack_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
     except socket.error:
         exit('Error creating socket.')
 

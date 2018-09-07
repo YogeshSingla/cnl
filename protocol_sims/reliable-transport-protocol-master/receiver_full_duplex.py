@@ -1,14 +1,9 @@
 #!/usr/bin/env python
-"""
-Receiver.py
-"""
-
 import datetime
 import signal
 import socket
 import sys
 import util
-
 
 # Shut down program if interrupted, closing all socks and files
 def shutdown(signum, frame):
@@ -35,17 +30,12 @@ if __name__ == '__main__':
     signal.signal(signal.SIGINT, shutdown) # Sets the keyboard interrupt handler as shutdown function
 
     # Set command line args
-    try:
-        filename = sys.argv[1]
-        listen_port = int(sys.argv[2])
-        sender_ip = socket.gethostbyname(sys.argv[3])
-        sender_port = int(sys.argv[4])
-        log_filename = sys.argv[5]
-        packet_filename = sys.argv[6]
-
-
-    except IndexError, TypeError:
-        exit("usage: ./receiver.py <filename> <listening_port> <sender_IP> <sender_port> <log_filename> <packet_filename>")
+    filename = 'data/received_message'
+    listen_port = '432'
+    sender_ip = '127.0.0.1'
+    sender_port = '433'
+    log_filename = 'data/log_receiver.txt'
+    packet_filename = 'data/received_packets'
 
     # Establish initial sockets
     try:
