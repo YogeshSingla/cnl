@@ -1,0 +1,5 @@
+1. Implement the shortest path algorithm for a topology of 50 nodes with following features:
+a. Let the topology be formed by giving the node ID and its transmission range as input.
+b. Let the link be established by checking the range of the nodes and assign random weights to the links established.
+c. Consider 5 pairs of (source, destination)
+d. For every such pair find the shortest path while storing the sequence of working nodes in a table.
