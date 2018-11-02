@@ -1,0 +1,27 @@
+Consider a network topology with 10 nodes. Write the following modules for:
+
+-         Node initialisation
+
+-         Creating distance matrix
+
+-         Detecting neighbours
+
+-         Building link cost packets
+
+-         Updating routing tables
+
+-         Tracing the shortest path from source to destination.
+
+Using the modules mentioned above, implement the following routing algorithms: (the algorithms should be distributed in nature)
+
+1.     Bellman-ford algorithm
+
+3.     Link state algorithm
+
+ 
+
+Reviews:
+
+1.     Compare the end-to-end delay for all the algorithms considering the same pair of source and destination.
+
+2.     Justify your result. 
