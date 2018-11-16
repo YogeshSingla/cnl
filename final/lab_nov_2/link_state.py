@@ -7,6 +7,13 @@ import os
 """
     The program accepts the network topology details in terms of the cost of links, and provides the shortest path tree for the
     network. It uses Dijkstra's Algorithm to construct its routing table.
+Link state algorithm:
+    1 * Each router establishes a relationship an adjacency with each of its neighbors.
+    2 * Each router sends link state advertisements (LSAs), some
+    3 * Each router stores a copy of all the LSAs it has seen in a database. If all works well, the databases in all routers should be identical.
+    4 * The completed topological database, also called the link state database, describes a graph of the internetwork. Using the Dijkstra algorithm, each router calculates the shortest path to each network and enters this information into the route table.
+
+ref: http://www.ciscopress.com/articles/article.asp?p=24090&seqNum=4
 """
 NUM_NODES = 8
 router_matrix = []
@@ -55,7 +62,7 @@ def process_file(fname):
         router_matrix=[list(map(int,x.split(" "))) for x in f]      # Data from input file is stored in a two dimensional list(array).
     matrix_set = 1
 
-    print "\nReview original topology matrix:\n"
+    print "\noriginal topology matrix:\n"
     for line in router_matrix :
         for item in line :
             print item,
