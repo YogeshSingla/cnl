@@ -1,0 +1,9 @@
+iperf -s -b 1000m 	#tcp 1000MB
+iperf -s -u -b 1000m	#udp 1000MB
+
+iperf -c 127.0.0.1 -i 1 -t 60	#60 seconds
+iperf -c 127.0.0.1 -i 1 -t 120	#120 seconds
+iperf -c 127.0.0.1 -i 1 -t 300	#300 seconds
+
+
+iperf -c 127.0.0.1 -i 1 -t 60 > out.txt &

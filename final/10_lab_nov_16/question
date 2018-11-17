@@ -1,0 +1,11 @@
+Use hexdump to ARP request message to determine the following:
+a. The HW type
+b. The protocol type
+c. The HW length
+d. The protocol length
+e. The value of the operation field and its type
+f. The src HW address
+g. The src protocol address
+h. The dest HW address (both in request and in reply)
+i. The dest protocol address
+j. Check for the presence of any ICMP message 

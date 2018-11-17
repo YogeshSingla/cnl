@@ -1,0 +1,175 @@
+tcpdump
+text2pcap
+
+capture one arp packet:
+	sudo tcpdump -i eth0 arp  -c 1 -w arp_one_packet
+
+
+packet captured:
+
+d4c3 b2a1 0200 0400 0000 0000 0000 0000
+0000 0400 0100 0000 7f7c ee5b b33d 0000
+3c00 0000 3c00 0000 ffff ffff ffff 8416
+f945 31df 0806 0001 0800 0604 0001 8416
+f945 31df c0a8 2b3c 0000 0000 0000 c0a8
+2b55 0000 0000 0000 0000 0000 0000 0000
+0000 0000 
+
+size: 50 x 16 bits = 100 bytes
+
+packet format:
+-----------
+bits field
+-----------
+16 HTYPE 			
+16 PTYPE
+8 HLEN	
+8 PLEN	
+16 OPERATION
+48 SENDER HARDWARE ADDRESS 
+32 SENDER IP 
+48 TARGET HARDWARE ADDRESS
+32 TARGET IP
+-------------
+total 28 bytes
+-------------
+
+terminal dump:
+13:44:55.015795 ARP, Request who-has 192.168.43.85 tell 192.168.43.60, length 46
+
+192.168.43.60 in hex is :
+use 
+	printf "%x\n" 192 168 43 60
+output: 
+c0 a8 2b 3c
+
+this can be traced in the packet easily
+
+d4c3 b2a1 0200 0400 0000 0000 0000 0000
+0000 0400 0100 0000 7f7c ee5b b33d 0000
+3c00 0000 3c00 0000 ffff ffff ffff 8416
+f945 31df 0806 0001 0800 0604 0001 8416
+f945 31df [c0a8 2b3c] 0000 0000 0000 c0a8
+2b55 0000 0000 0000 0000 0000 0000 0000
+0000 0000 
+
+decoding the entire packet:
+
+d4c3 b2a1 0200 0400 0000 0000 0000 0000
+0000 0400 0100 0000 7f7c ee5b b33d 0000
+3c00 0000 3c00 0000 ffff ffff ffff 8416
+f945 31df 0806 
+
+HTYPE	  :					0001 (hardware type, ethernet is 1)
+PTYPE	  :					0800 (ip protocol type, for ipv4 it is 0800)
+HLEN      :					06 (hardware address length, ethernet is 6 octets)
+PLEN	  :					04  (upper layer protocol size, 4 for ipv4)
+OPERATION :					0001  (1 means request, 2 means reply)
+SENDER HARDWARE ADDRESS:	8416 f945 31df 
+SENDER IP : 				c0a8 2b3c 
+TARGET HARDWARE ADDRESS: 	0000 0000 0000 
+TARGET IP : 				c0a8 2b55  (converts to 192.168.43.85)
+
+0000 0000 0000 0000 0000 0000 0000
+0000 0000 
+
+To decode the target ip:
+ 	printf "%d\n" 0xc0 0xa8 0x2b 0x55
+ output:
+192 168 43 85
+
+
+
+PACKET FORMAT AS PER RFC 826
+
+Packet format:
+--------------
+
+To communicate mappings from <protocol, address> pairs to 48.bit
+Ethernet addresses, a packet format that embodies the Address
+Resolution protocol is needed.  The format of the packet follows.
+
+    Ethernet transmission layer (not necessarily accessible to
+         the user):
+        48.bit: Ethernet address of destination
+        48.bit: Ethernet address of sender
+        16.bit: Protocol type = ether_type$ADDRESS_RESOLUTION
+    Ethernet packet data:
+        16.bit: (ar$hrd) Hardware address space (e.g., Ethernet,
+                         Packet Radio Net.)
+        16.bit: (ar$pro) Protocol address space.  For Ethernet
+                         hardware, this is from the set of type
+                         fields ether_typ$<protocol>.
+         8.bit: (ar$hln) byte length of each hardware address
+         8.bit: (ar$pln) byte length of each protocol address
+        16.bit: (ar$op)  opcode (ares_op$REQUEST | ares_op$REPLY)
+        nbytes: (ar$sha) Hardware address of sender of this
+                         packet, n from the ar$hln field.
+        mbytes: (ar$spa) Protocol address of sender of this
+                         packet, m from the ar$pln field.
+        nbytes: (ar$tha) Hardware address of target of this
+                         packet (if known).
+        mbytes: (ar$tpa) Protocol address of target.
+
+
+
+
+DECODED:
+
+[d4c3 b2a1 0200 0400 0000 0000 0000 0000
+0000 0400 0100 0000 7f7c ee5b b33d 0000
+3c00 0000 3c00 0000]    40 bytes  
+unknown
+     
+[ffff ffff ffff]
+48.bit: Ethernet address of destination
+
+[8416 f945 31df]
+48.bit: Ethernet address of sender
+
+[0806]
+16.bit: Protocol type = ether_type$ADDRESS_RESOLUTION Ethernet packet data:
+
+------------------------
+ARP PACKET START
+------------------------
+
+[0001]
+16.bit: (ar$hrd) Hardware address space (e.g., Ethernet, Packet Radio Net.)
+
+[0800]
+16.bit: (ar$pro) Protocol address space.  For Ethernet hardware, this is from the set of type fields ether_typ$ protocol>.
+
+[06]
+8.bit: (ar$hln) byte length of each hardware address
+
+[04]
+8.bit: (ar$pln) byte length of each protocol address
+
+[0001]
+16.bit: (ar$op)  opcode (ares_op$REQUEST | ares_op$REPLY) 
+
+[8416 f945 31df]
+nbytes: (ar$sha) Hardware address of sender of this packet, n from the ar$hln field.
+
+[c0a8 2b3c]
+mbytes: (ar$spa) Protocol address of sender of this packet, m from the ar$pln field.
+
+-----------------------
+ARP PACKET END
+-----------------------
+
+[0000 0000 0000]
+nbytes: (ar$tha) Hardware address of target of this packet (if known).
+
+[c0a8 2b55]
+mbytes: (ar$tpa) Protocol address of target.
+
+
+
+[0000 0000 0000 0000 0000 0000 0000
+0000 0000] 18 bytes
+padding
+
+
+FRAME SIZE is 60 bytes

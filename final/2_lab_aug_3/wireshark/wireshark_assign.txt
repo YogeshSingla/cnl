@@ -1,0 +1,49 @@
+1. Find the last ARP packet in the file. What IP address was it asking about?
+Ans: 192.68.43.21
+
+2. Find the first DNS request. What is its transaction ID in hexadecimal?
+Transaction ID: 0x002f
+
+3. What domain name was it requesting?
+Ans: www.google.co.in
+
+4. What type of DNS Resource Record (RR) was requested?
+Ans: It resuested an A (IPv4) resource record. 
+
+5. Find the response to that DNS request. What was the first IP address that it returned?
+Ans: IP Address returned: 192.168.43.1
+
+6. Find the first TCP three way handshake.
+
+
+
+7. Find the first Ipv4 TCP packet. What is its source IP address?
+Ans: Source IP: 192.168.43.21
+
+8a. What is the opening IP address in its first SYN packet?
+Ans:  192.168.43.21
+
+8b. What is the destination IP address in its opening SYN packet?
+Ans: 172.217.163.67
+
+9. What is the absolute Sequence number sent in resp0nse to the opening Syn packet in question 8?
+Ans: Seq = 0 
+
+10. Find the last TCP packet in the file that has the FIN flag on.
+
+
+10a. What is its source port number?
+Ans: 41996
+
+10b. What is its destination port number?
+Ans: 443
+
+11. Now find the opening SYN+ACK packet that began the TCP session ending with that FIN packet. What is its sequence number?
+Ans: Seq = 0
+
+12. Look again at the FIN packets you found for questions 10a and 10b. What was its end byte number?
+Ans: Ack number = end byte number = 2
+
+13. How many bytes were sent from the responder to the initiator for that TCP session?
+Ans: 66 bytes captured
+
